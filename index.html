@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monty Hall Problem Solution! - [ ITISWHATITIS ]</title>
+
+    <!-- External CSS ekliyoruz -->
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <h1 class="title">
+      Monty Hall Problem Solution - for Cyber Security Club!
+    </h1>
+    <div style="border: 1px solid #000" class="container">
+      <div>
+        <img onclick="start(0)" src="./assets/closed-door.png" alt="" />
+      </div>
+      <div>
+        <img onclick="start(1)" src="./assets/closed-door.png" alt="" />
+      </div>
+      <div>
+        <img onclick="start(2)" src="./assets/closed-door.png" alt="" />
+      </div>
+    </div>
+    <div class="statistics">
+      <table>
+        <tr>
+          <th>win staying</th>
+          <th>win changing</th>
+          <th>loss staying</th>
+          <th>loss changing</th>
+          <th>total game</th>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- External JS ekliyoruz -->
+    <script src="./app.js"></script>
+  </body>
+</html>
