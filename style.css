@@ -48,6 +48,48 @@ td {
 table {
   width: 80vw;
 }
+.mode {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #333;
+  z-index: 999999;
+}
+.mode > .manual,
+.mode > .auto {
+  color: #000;
+  font-size: 19px;
+  background-color: #a09e9e;
+  margin-bottom: 10px;
+  padding: 15px;
+  width: 40%;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+.mode > .manual:hover,
+.mode > .auto:hover {
+  background-color: #fff;
+}
+.mode > .auto {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.mode > .manual {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
 
 @media only screen and (max-width: 720px) {
   .container div img {
