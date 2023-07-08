@@ -66,10 +66,15 @@ function openAllDoor() {
 async function reset() {
   await sleep(2500);
   for (i = 0; i < getDOMSelectDoor.length; i++) {
-    getDOMSelectDoor[i].innerHTML =
-      '<img onclick="start(' +
-      i +
-      ')" src="./assets/closed-door.png" alt="" />';
+    if (autoPlayMode !== true) {
+      getDOMSelectDoor[i].innerHTML =
+        '<img onclick="start(' +
+        i +
+        ')" src="./assets/closed-door.png" alt="" />';
+    } else {
+      getDOMSelectDoor[i].innerHTML =
+        '<img style="cursor:none" src="./assets/closed-door.png" alt="" />';
+    }
     shuffleArray(arr); //3x karıştırma :d
   }
 }
@@ -124,6 +129,12 @@ function handleClick() {
     audio.volume = 0.2;
     audio.play();
     firstClick = false;
+  }
+}
+
+if (autoPlayMode !== true) {
+  for (let i = 0; i <= getDOMSelectDoor.length - 1; i++) {
+    getDOMSelectDoor[i].removeAttribute("onclick");
   }
 }
 
