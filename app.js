@@ -5,19 +5,21 @@ const shuffleArray = (array) => {
     [array[i], array[j]] = [array[j], array[i]];
   }
 };
-
+//
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 const arr = ["goat", "goat", "car"],
-  getDOMSelectDoor = document.querySelectorAll(".container > div");
+  getDOMSelectDoor = document.querySelectorAll(".container > div"),
+  mode = document.getElementById("mode");
 let changeWin = 0,
   notChangeWin = 0,
   changeLose = 0,
   notChangeLose = 0,
   totalGame = 0,
-  openDoor;
+  openDoor,
+  autoPlayMode = false;
 
 shuffleArray(arr);
 
@@ -86,19 +88,25 @@ async function next(secondChoice, firstChoice) {
   const statistics = document.querySelectorAll(
     ".statistics > table > tbody > tr:nth-child(2) > td"
   );
-  if (arr[secondChoice] == "car") {
-    var audio = new Audio("./assets/music/winner.mp3");
-    audio.volume = 0.3;
-    audio.play();
-  } else {
-    var audio = new Audio("./assets/music/lose.mp3");
-    audio.volume = 0.3;
-    audio.play();
+  if (autoPlayMode !== true) {
+    if (arr[secondChoice] == "car") {
+      var audio = new Audio("./assets/music/winner.mp3");
+      audio.volume = 0.3;
+      audio.play();
+    } else {
+      var audio = new Audio("./assets/music/lose.mp3");
+      audio.volume = 0.3;
+      audio.play();
+    }
   }
-  statistics[0].innerText = notChangeWin;
-  statistics[1].innerText = changeWin;
-  statistics[2].innerText = notChangeLose;
-  statistics[3].innerText = changeLose;
+  statistics[0].innerText =
+    notChangeWin + "(" + ((notChangeWin / totalGame) * 100).toFixed(2) + "%)";
+  statistics[1].innerText =
+    changeWin + "(" + ((changeWin / totalGame) * 100).toFixed(2) + "%)";
+  statistics[2].innerText =
+    notChangeLose + "(" + ((notChangeLose / totalGame) * 100).toFixed(2) + "%)";
+  statistics[3].innerText =
+    changeLose + "(" + ((changeLose / totalGame) * 100).toFixed(2) + "%)";
   statistics[4].innerText = totalGame;
   reset();
 }
@@ -120,3 +128,39 @@ function handleClick() {
 }
 
 document.addEventListener("click", handleClick);
+
+async function autoPlay(convertedNumber) {
+  autoPlayMode = true;
+  for (let j = 1; j <= convertedNumber; j++) {
+    let randSelect = Math.floor(Math.random() * 3);
+    start(randSelect);
+    keyArr = [0, 1, 2];
+    for (let i = keyArr.length - 1; i >= 0; i--) {
+      if (keyArr[i] == randSelect || keyArr[i] == openDoor) {
+        keyArr.splice(i, 1);
+      }
+    }
+    await sleep(2);
+    next(keyArr[0]);
+    await sleep(1);
+  }
+}
+function manual() {
+  mode.style.display = "none";
+}
+async function auto() {
+  mode.style.display = "none";
+  let number = prompt("Kaç kez sizin yerinize oynamamı istersiniz ?");
+  let convertedNumber = parseInt(number);
+  if (
+    !isNaN(convertedNumber) &&
+    convertedNumber > 0 &&
+    convertedNumber < 10000
+  ) {
+    await sleep(1000);
+    autoPlay(convertedNumber);
+  } else {
+    alert("Yalnış Prompt!");
+    auto();
+  }
+}
